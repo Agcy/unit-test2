@@ -52,5 +52,21 @@ class Catalogue {
     return noProductsAdded;
   }
 
+  search(criteria){
+    if(criteria.hasOwnProperty('price')){
+      return this.products
+      .filter(product => product.price <= criteria.price)
+      .map((product) => {
+        return product.id
+      });
+    }
+    else if(criteria.hasOwnProperty('keyword')){
+      return this.products.filter(product => product.name.search(criteria.keyword) !== -1)
+    }
+    else{
+      throw new Error("Bad search");
+    }
+  }
+
 }
 module.exports = Catalogue;

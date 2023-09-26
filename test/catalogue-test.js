@@ -88,4 +88,26 @@ describe("Catalogue", () => {
         expect(rejectedProduct).to.be.undefined; 
       });
   });
+
+  describe("search", () => {
+    beforeEach(() => {
+        cat = new Catalogue("Test")
+        cat.addProduct(new Product("A128", "shoes", 100, 10, 10.0))
+        cat.addProduct(new Product("A129", "Widget", 100, 10, 30.0))
+    });
+    it("should return products cheaper than €25.01.", () => {
+        const result = cat.search({price: 25})
+        console.log(result)
+        expect(result).to.have.lengthOf(1);
+        expect(result).to.have.members(["A128"]);
+    })
+    it("should return products with 'sho' in the name (e.g. shoes, shoulder bag).", () => {
+        const result = cat.search({keyword: "Widget" })
+        console.log(result[0].name)  // Display name of first product object
+        expect(result[0].name).to.equal('Widget')
+    });
+    it("If the criteria object has neither key then an exception should be thrown with the message 'Bad search'.", () => {
+        expect(() => cat.search([])).to.throw("Bad search");
+    })
+  })
 });
