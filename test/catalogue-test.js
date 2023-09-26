@@ -80,12 +80,12 @@ describe("Catalogue", () => {
       addedProduct = cat.findProductById("A127");
       expect(addedProduct).to.not.be.undefined;
     });
-    it("should only add products with a non-zero quantity in stock", () => {
-        batch.products.push(new Product("A128", "Product 8", 0, 10, 10.0));
-        const result = cat.batchAddProducts(batch);
-        expect(result).to.equal(2);
-        const rejectedProduct = cat.findProductById("A128");
-        expect(rejectedProduct).to.be.undefined;
-    });
+    it("should throw an exception when batch includes an existing product id", () => {
+        batch.products.push(new Product("A123", "Product 9", 0, 10, 10.0));
+        expect(() => cat.batchAddProducts(batch)).to.throw("Bad Batch");
+        // Target state
+        let rejectedProduct = cat.findProductById("A126");
+        expect(rejectedProduct).to.be.undefined; 
+      });
   });
 });
