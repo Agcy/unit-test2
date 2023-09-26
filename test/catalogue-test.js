@@ -52,15 +52,13 @@ describe("Catalogue", () => {
         it("should include products just on their reorder level", function () {
           cat.addProduct(new Product("B125", "Product 6", 10, 10, 10.0));
           const result = cat.checkReorders();
-          // TO BE COMPLETED
-          expect(result.productIds).to.include("B125");
+          expect(result.productIds).to.have.members(["B125"]);
         });
-        it("should handle the empty catalogue case", function () {
-           // TO BE COMPLETED
-        //    cat = new Catalogue("Empty Catalogue");
-           const result = cat.checkReorders();
-           expect(result.productIds).to.be.empty;
-         });
+        it("should handle an the empty catalogue case", function () {
+          cat = new Catalogue("Test catalogue");
+          const result = cat.checkReorders();
+          expect(result.productIds).to.be.empty;
+        });
       });
   });
 });
